@@ -5,7 +5,7 @@ const router = useRouter()
 const route = useRoute()
 
 const navItems = [
-  { name: 'home', label: '帳本', icon: 'home', path: '/home' },
+  { name: 'home', label: '帳本', icon: 'home', path: '/' },
   { name: 'daily-report', label: '日報', icon: 'chart-simple', path: '/daily-report' },
   { name: 'monthly-report', label: '月報', icon: 'chart-pie', path: '/monthly-report' },
   { name: 'settings', label: '設定', icon: 'cog', path: '/settings' },
@@ -45,13 +45,10 @@ const isActive = (path: string) => {
   bottom: 0;
   left: 0;
   right: 0;
-  height:60;
   background-color: #fff;
-  border-top: 1px solid #e8d5b5;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  //padding: 12px 0 20px 0;
   box-shadow: 0 -2px 8px rgba(232, 213, 181, 0.3);
   z-index: 1000;
 }

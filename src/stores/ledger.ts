@@ -95,9 +95,7 @@ export const useLedgerStore = defineStore('ledger', () => {
   const categoryTotals = computed(() => {
     const totals: Record<string, number> = {}
     transactionsByDate.value.forEach(t => {
-      if (t.type === 'expense') {
-        totals[t.category] = (totals[t.category] || 0) + t.amount
-      }
+      totals[t.category] = (totals[t.category] || 0) + t.amount
     })
     return totals
   })

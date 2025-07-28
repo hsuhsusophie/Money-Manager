@@ -1,17 +1,13 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import IndexView from '../views/pages/index.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: () => import('../views/pages/HomeView.vue'),
-    },
-    {
-      path: '/home',
-      name: 'home-alias',
-      component: () => import('../views/pages/HomeView.vue'),
+      name: 'index',
+      component: IndexView,
     },
     {
       path: '/daily-report',

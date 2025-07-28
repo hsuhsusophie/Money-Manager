@@ -107,13 +107,17 @@ const addNewCategory = () => {
 
 .category-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 12px;
   border-radius: 8px;
   border: 2px solid transparent;
   cursor: pointer;
   transition: all 0.2s;
   position: relative;
+  text-align: center;
+  min-height: 80px;
 }
 
 .category-item:hover {
@@ -134,13 +138,18 @@ const addNewCategory = () => {
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  margin-right: 12px;
+  margin-bottom: 8px;
   flex-shrink: 0;
 }
 
 .category-info {
   flex: 1;
   min-width: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .category-name {
@@ -148,17 +157,19 @@ const addNewCategory = () => {
   font-weight: 500;
   color: #333;
   margin-bottom: 2px;
+  text-align: center;
 }
 
 .category-amount {
   font-size: 12px;
   color: #666;
+  text-align: center;
 }
 
 .category-check {
   position: absolute;
   top: 8px;
-  right: 8px;
+  right: 2px;
   width: 20px;
   height: 20px;
   background-color: #007aff;
@@ -174,7 +185,7 @@ const addNewCategory = () => {
 .edit-btn {
   position: absolute;
   top: 8px;
-  right: 36px;
+  right: 50px;
   width: 20px;
   height: 20px;
   background-color: #f0f0f0;
@@ -220,7 +231,7 @@ const addNewCategory = () => {
 
 @media (max-width: 480px) {
   .categories-grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
   }
   
