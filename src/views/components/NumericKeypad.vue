@@ -12,10 +12,7 @@ const displayValue = computed({
 
 // 數字按鈕點擊
 const inputDigit = (digit: string) => {
-  if (waitingForOperand.value) {
-    store.setCurrentAmount(digit)
-    waitingForOperand.value = false
-  } else if (displayValue.value === '0') {
+  if (displayValue.value === '0') {
     store.setCurrentAmount(digit)
   } else {
     store.setCurrentAmount(displayValue.value + digit)
@@ -86,8 +83,8 @@ const confirm = () => {
       <div class="keypad-row">
         <button class="keypad-btn function" @click="clear">C</button>
         <button class="keypad-btn function" @click="backspace">⌫</button>
-        <button class="keypad-btn operator" @click="setOperation('-')">-</button>
-        <button class="keypad-btn operator" @click="setOperation('+')">+</button>
+        <button class="keypad-btn function" @click="inputDecimal">.</button>
+        <button class="keypad-btn confirm" @click="confirm">✓</button>
       </div>
       
       <!-- 第二行 -->
@@ -95,7 +92,7 @@ const confirm = () => {
         <button class="keypad-btn number" @click="inputDigit('7')">7</button>
         <button class="keypad-btn number" @click="inputDigit('8')">8</button>
         <button class="keypad-btn number" @click="inputDigit('9')">9</button>
-        <button class="keypad-btn operator" @click="equals">=</button>
+        <button class="keypad-btn number" @click="inputDigit('0')">0</button>
       </div>
       
       <!-- 第三行 -->
@@ -103,16 +100,15 @@ const confirm = () => {
         <button class="keypad-btn number" @click="inputDigit('4')">4</button>
         <button class="keypad-btn number" @click="inputDigit('5')">5</button>
         <button class="keypad-btn number" @click="inputDigit('6')">6</button>
-        <button class="keypad-btn number" @click="inputDigit('0')">0</button>
+        <button class="keypad-btn number" @click="inputDigit('1')">1</button>
       </div>
       
       <!-- 第四行 -->
       <div class="keypad-row">
-              <button class="keypad-btn number"@click="inputDigit('1')">1</button>
         <button class="keypad-btn number" @click="inputDigit('2')">2</button>
         <button class="keypad-btn number" @click="inputDigit('3')">3</button>
-
-        <button class="keypad-btn confirm" @click="confirm">✓</button>
+        <button class="keypad-btn number" @click="inputDigit('0')">0</button>
+        <button class="keypad-btn function" @click="backspace">⌫</button>
       </div>
     </div>
   </div>
@@ -123,7 +119,7 @@ const confirm = () => {
   background-color: #f8f8f8;
   border-radius: 12px;
   padding: 16px;
-  //margin-bottom: 100px;
+  /* margin-bottom: 100px; */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
