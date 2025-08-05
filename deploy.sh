@@ -18,7 +18,7 @@ if [[ -n $(git status --porcelain) ]]; then
     exit 1
 fi
 
-# 3. 構建專案
+# 3. 構建專案（在main分支）
 echo "🔨 構建專案..."
 npm run build
 if [ $? -ne 0 ]; then
