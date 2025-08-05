@@ -84,6 +84,21 @@ export const useLedgerStore = defineStore('ledger', () => {
       .reduce((sum, t) => sum + t.amount, 0)
   })
 
+  // 月份收支計算
+  const monthlyExpense = computed(() => {
+    const selectedMonth = selectedDate.value.substring(0, 7) // 取得 YYYY-MM 格式
+    return transactions.value
+      .filter(t => t.type === 'expense' && t.date.startsWith(selectedMonth))
+      .reduce((sum, t) => sum + t.amount, 0)
+  })
+
+  const monthlyIncome = computed(() => {
+    const selectedMonth = selectedDate.value.substring(0, 7) // 取得 YYYY-MM 格式
+    return transactions.value
+      .filter(t => t.type === 'income' && t.date.startsWith(selectedMonth))
+      .reduce((sum, t) => sum + t.amount, 0)
+  })
+
   const balance = computed(() => {
     return totalIncome.value - totalExpense.value
   })
@@ -95,7 +110,9 @@ export const useLedgerStore = defineStore('ledger', () => {
   const categoryTotals = computed(() => {
     const totals: Record<string, number> = {}
     transactionsByDate.value.forEach(t => {
-      totals[t.category] = (totals[t.category] || 0) + t.amount
+      // 根據交易類型決定是加還是減
+      const amount = t.type === 'income' ? t.amount : -t.amount
+      totals[t.category] = (totals[t.category] || 0) + amount
     })
     return totals
   })
@@ -222,6 +239,8 @@ export const useLedgerStore = defineStore('ledger', () => {
     // 計算屬性
     totalExpense,
     totalIncome,
+    monthlyExpense,
+    monthlyIncome,
     balance,
     transactionsByDate,
     categoryTotals,

@@ -38,10 +38,7 @@ const addNewCategory = () => {
 <template>
   <div class="category-list">
     <div class="category-header">
-      <h3>選擇分類</h3>
-      <div class="header-actions">
         <button class="add-btn" @click="addNewCategory">+ 新增</button>
-      </div>
     </div>
     
     <div class="categories-grid">
@@ -57,13 +54,14 @@ const addNewCategory = () => {
         </div>
         <div class="category-info">
           <div class="category-name">{{ category.name }}</div>
-          <div class="category-amount">
-            ${{ (categoryTotals[category.id] || 0).toFixed(0) }}
+          <div class="category-amount" :class="{ 
+            'positive': (categoryTotals[category.id] || 0) > 0,
+            'negative': (categoryTotals[category.id] || 0) < 0
+          }">
+            ${{ Math.abs(categoryTotals[category.id] || 0).toFixed(0) }}
           </div>
         </div>
-        <div class="category-check" v-if="selectedCategory === category.id">
-          ✓
-        </div>
+
         <button class="edit-btn" @click.stop="editCategory(category)">
           ✏️
         </button>
@@ -83,21 +81,11 @@ const addNewCategory = () => {
 
 .category-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 5px;
 }
 
-.category-header h3 {
-  margin: 0;
-  font-size: 16px;
-  color: #333;
-}
-
-.category-hint {
-  font-size: 12px;
-  color: #999;
-}
 
 .categories-grid {
   display: grid;
@@ -166,6 +154,14 @@ const addNewCategory = () => {
   text-align: center;
 }
 
+.category-amount.positive {
+  color: #51cf66;
+}
+
+.category-amount.negative {
+  color: #ff6b6b;
+}
+
 .category-check {
   position: absolute;
   top: 8px;
@@ -209,11 +205,6 @@ const addNewCategory = () => {
   background-color: #e0e0e0;
 }
 
-.header-actions {
-  display: flex;
-  gap: 2px;
-}
-
 .add-btn {
   padding: 6px 12px;
   background-color: #007aff;
@@ -243,7 +234,6 @@ const addNewCategory = () => {
     width: 32px;
     height: 32px;
     font-size: 16px;
-    margin-right: 8px;
   }
   
   .category-name {
