@@ -1,55 +1,60 @@
 <script setup lang="ts">
 import { useLedgerStore } from '@/stores/ledger'
 import { ref, computed, watch } from 'vue'
+import { showError } from '@/utils/toast'
 
 const store = useLedgerStore()
 
 // 表單數據
 const formData = ref({
   name: '',
-  icon: '📝',
-  color: '#5f27cd'
+  icon: '📁',
+  color: '#007aff'
 })
 
-// 預設圖標選項
-const iconOptions = [
-  '🍽️', '🥤', '🚗', '🛍️', '🎮', '💊', '📚', '📝', '🏠', '🎬', 
-  '🍕', '☕', '🚌', '🛒', '🎵', '💉', '✏️', '📱', '💻', '🎨'
-]
-
-// 預設顏色選項
-const colorOptions = [
-  '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', 
-  '#ff9ff3', '#54a0ff', '#5f27cd', '#ff9f43', '#00d2d3'
-]
-
 // 是否為編輯模式
-const isEditMode = computed(() => store.editingCategory !== null)
+const isEditMode = computed(() => !!store.editingCategory)
+
+// 圖標選項
+const iconOptions = [
+  '💰', '🍽️', '🥤', '🚗', '🛍️', '🎮', '💊', '📚',
+  '🏠', '👕', '🎵', '🎬', '✈️', '🏥', '💡', '🎁'
+]
+
+// 顏色選項
+const colorOptions = [
+  '#007aff', '#51cf66', '#ff6b6b', '#ffd43b', '#339af0',
+  '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43'
+]
 
 // 初始化表單
 const initForm = () => {
   if (store.editingCategory) {
-    formData.value = { ...store.editingCategory }
+    formData.value = {
+      name: store.editingCategory.name,
+      icon: store.editingCategory.icon,
+      color: store.editingCategory.color
+    }
   } else {
     formData.value = {
       name: '',
-      icon: '📝',
-      color: '#5f27cd'
+      icon: '📁',
+      color: '#007aff'
     }
   }
 }
 
 // 保存分類
-const saveCategory = () => {
+const saveCategory = async () => {
   if (!formData.value.name.trim()) {
-    alert('請輸入分類名稱')
+    showError('請輸入分類名稱')
     return
   }
 
   try {
-    if (isEditMode.value && store.editingCategory) {
-      // 更新現有分類
-      store.updateCategory(store.editingCategory.id, {
+    if (isEditMode.value) {
+      // 更新分類
+      store.updateCategory(store.editingCategory!.id, {
         name: formData.value.name,
         icon: formData.value.icon,
         color: formData.value.color
@@ -67,7 +72,7 @@ const saveCategory = () => {
     store.setEditingCategories(false)
     store.setEditingCategory(null)
   } catch (error) {
-    alert(error instanceof Error ? error.message : '操作失敗')
+    showError(error instanceof Error ? error.message : '操作失敗')
   }
 }
 
@@ -87,7 +92,7 @@ const deleteCategory = () => {
       store.setEditingCategories(false)
       store.setEditingCategory(null)
     } catch (error) {
-      alert(error instanceof Error ? error.message : '刪除失敗')
+      showError(error instanceof Error ? error.message : '刪除失敗')
     }
   }
 }
@@ -149,20 +154,21 @@ watch(() => store.isEditingCategories, (newValue) => {
           />
         </div>
       </div>
-        <div class="editor-actions">
-      <button class="btn btn-secondary" @click="cancelEdit">取消</button>
-      <button 
-        v-if="isEditMode" 
-        class="btn btn-danger" 
-        @click="deleteCategory"
-      >
-        刪除
-      </button>
-      <button class="btn btn-primary" @click="saveCategory">
-        {{ isEditMode ? '更新' : '新增' }}
-      </button>
-    </div>
- 
+      
+      <!-- 按鈕區域 -->
+      <div class="editor-actions">
+        <button class="btn btn-secondary" @click="cancelEdit">取消</button>
+        <button 
+          v-if="isEditMode" 
+          class="btn btn-danger" 
+          @click="deleteCategory"
+        >
+          刪除
+        </button>
+        <button class="btn btn-primary" @click="saveCategory">
+          {{ isEditMode ? '更新' : '新增' }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -215,19 +221,12 @@ watch(() => store.isEditingCategories, (newValue) => {
 .editor-form {
   background: #fff;
   border-radius: 10px;
-  padding: 24px;
-  width: 85%;
+  padding: 20px;
+  width: 90%;
   max-width: 400px;
-
-  overflow-y: auto; 
-  top:5%;
-  //bottom:10%;
+  overflow-y: auto;
   position: absolute;
-  width: 90%; 
-  max-width: 400px;
-  padding: 20px; 
-  
-
+  top: 5%;
 }
 
 .form-group {
@@ -381,7 +380,6 @@ watch(() => store.isEditingCategories, (newValue) => {
 
   .editor-form {
     width: 85%;
-    //max-height: 90vh;
     padding: 20px;
   }
   
@@ -390,7 +388,7 @@ watch(() => store.isEditingCategories, (newValue) => {
   }
   
   .color-grid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 </style> 

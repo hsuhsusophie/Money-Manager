@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useLedgerStore } from '@/stores/ledger'
 import { computed, ref } from 'vue'
+import { showError } from '@/utils/toast'
 
 const store = useLedgerStore()
 
@@ -96,13 +97,13 @@ const equals = () => {
 // 確認按鈕 - 新增交易
 const confirm = () => {
   if (!store.selectedCategory) {
-    alert('請先選擇分類')
+    showError('請先選擇分類')
     return
   }
   
   const amount = parseFloat(displayValue.value)
   if (amount <= 0) {
-    alert('請輸入有效金額')
+    showError('請輸入有效金額')
     return
   }
   
