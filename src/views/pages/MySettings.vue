@@ -7,3 +7,11 @@ import FooterNav from '../../components/FooterNav.vue'
 MySettings
 </div>
 </template>
+
+<style scoped>
+.home-page {
+  padding: 16px;
+  min-height: 80vh;
+  background-color: #f5f5f5;
+}
+</style>
