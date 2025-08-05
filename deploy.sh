@@ -33,7 +33,7 @@ git checkout gh-pages
 # 5. 清空並複製新文件
 echo "📁 更新文件..."
 rm -rf *
-cp -r dist/* .
+cp -r ../dist/* . 2>/dev/null || cp -r dist/* .
 
 # 6. 提交更改
 echo "💾 提交更改..."
