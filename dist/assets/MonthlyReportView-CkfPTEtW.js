@@ -1,0 +1,1 @@
+import{d as e,c as o,o as t,_ as s}from"./index-BgtN8iJC.js";const n={class:"home-page"},_=e({__name:"MonthlyReportView",setup(a){return(c,p)=>(t(),o("div",n," MonthlyReportView "))}}),i=s(_,[["__scopeId","data-v-e62b0e81"]]);export{i as default};
