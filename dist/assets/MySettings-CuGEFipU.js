@@ -1,0 +1,1 @@
+import{d as e,c as t,o as s,_ as o}from"./index-CECI_gR6.js";const a={class:"home-page"},n=e({__name:"MySettings",setup(_){return(c,p)=>(s(),t("div",a," MySettings "))}}),i=o(n,[["__scopeId","data-v-aa99f045"]]);export{i as default};
