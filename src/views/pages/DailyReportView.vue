@@ -17,7 +17,7 @@ const getDateRange = () => {
   console.log('今天:', today)
   
   // 從當月1號到今天的日期
-  let currentDay = new Date(firstDayOfMonth)
+  let currentDay = new Date(firstDayOfMonth) 
   
   while (currentDay <= today) {
     // 格式化為 YYYY-MM-DD
