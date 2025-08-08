@@ -8,7 +8,7 @@ const getDateRange = () => {
   const dates = []
   const now = new Date()
   
-  // 獲取當月1號
+  // 獲取當月1號（使用本地時間）
   const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
   
@@ -17,10 +17,10 @@ const getDateRange = () => {
   console.log('今天:', today)
   
   // 從當月1號到今天的日期
-  let currentDay = new Date(firstDayOfMonth) 
+  let currentDay = new Date(firstDayOfMonth)
   
   while (currentDay <= today) {
-    // 格式化為 YYYY-MM-DD
+    // 格式化為 YYYY-MM-DD（使用本地時間）
     const year = currentDay.getFullYear()
     const month = String(currentDay.getMonth() + 1).padStart(2, '0')
     const day = String(currentDay.getDate()).padStart(2, '0')
@@ -134,18 +134,22 @@ const generatePieChart = (categoryStats: any[], total: number, size: number = 80
 // 格式化日期顯示
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr)
-  const today = new Date()
-  const yesterday = new Date(today.getTime())
-  yesterday.setDate(yesterday.getDate() - 1)
-  const tomorrow = new Date(today.getTime())
-  tomorrow.setDate(tomorrow.getDate() + 1)
+  const now = new Date()
   
-  if (dateStr === today.toISOString().split('T')[0]) {
+  // 獲取今天的日期字符串（本地時間）
+  const todayStr = now.toLocaleDateString('en-CA')
+  
+  // 獲取昨天的日期字符串
+  const yesterday = new Date(now)
+  yesterday.setDate(yesterday.getDate() - 1)
+  const yesterdayStr = yesterday.toLocaleDateString('en-CA')
+  
+  console.log('比較日期:', dateStr, '今天:', todayStr, '昨天:', yesterdayStr)
+  
+  if (dateStr === todayStr) {
     return '今天'
-  } else if (dateStr === yesterday.toISOString().split('T')[0]) {
+  } else if (dateStr === yesterdayStr) {
     return '昨天'
-  } else if (dateStr === tomorrow.toISOString().split('T')[0]) {
-    return '明天'
   } else {
     return `${date.getMonth() + 1}月${date.getDate()}日`
   }
@@ -153,7 +157,7 @@ const formatDate = (dateStr: string) => {
 
 // 獲取日期範圍
 const dateRange = getDateRange()
-const today = new Date().toISOString().split('T')[0]
+const today = new Date().toLocaleDateString('en-CA') // 使用本地時間，格式為 YYYY-MM-DD
 
 // 計算圖標在圓餅圖中的位置
 const getIconPosition = (index: number, categoryStats: any[], size: number) => {
